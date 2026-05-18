@@ -38,6 +38,7 @@ export function BookmarkCard({
   const router = useRouter()
   const { toast } = useToast()
   const author = bookmark.author ?? defaultAuthorProfile
+  const hasImage = typeof bookmark.image === 'string' && bookmark.image.trim() && !bookmark.image.includes('/placeholder.svg')
 
   useEffect(() => {
     setMounted(true)
@@ -91,33 +92,35 @@ export function BookmarkCard({
     <motion.div whileHover={{ y: -4 }} transition={{ duration: 0.2 }}>
       <Card className="group h-full overflow-hidden border-border bg-card transition-all hover:border-muted-foreground/20">
         <Link href={`/sbm/${bookmark.slug}`} className="block">
-          <div className={cn('relative overflow-hidden', compact ? 'aspect-[4/3]' : 'aspect-[16/9]')}>
-            <Image
-              src={bookmark.image}
-              alt={bookmark.title}
-              fill
-              className="object-cover transition-transform duration-300 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-            <div className="absolute left-3 top-3 flex items-center gap-2">
-              <Badge className="bg-background/90 text-foreground">
-                {bookmark.category}
-              </Badge>
-              <Badge variant="secondary" className="bg-black/60 text-white">
-                {bookmark.domain}
-              </Badge>
+          {hasImage ? (
+            <div className={cn('relative overflow-hidden', compact ? 'aspect-[4/3]' : 'aspect-[16/9]')}>
+              <Image
+                src={bookmark.image}
+                alt={bookmark.title}
+                fill
+                className="object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+              <div className="absolute left-3 top-3 flex items-center gap-2">
+                <Badge className="bg-background/90 text-foreground">
+                  {bookmark.category}
+                </Badge>
+                <Badge variant="secondary" className="bg-black/60 text-white">
+                  {bookmark.domain}
+                </Badge>
+              </div>
+              <div className="absolute bottom-3 left-3 flex items-center gap-2 text-xs text-white">
+                <Clock className="h-3 w-3" />
+                <span suppressHydrationWarning>
+                  {mounted ? formatDistanceToNow(new Date(bookmark.createdAt), { addSuffix: true }) : 'Just now'}
+                </span>
+              </div>
+              <div className="absolute bottom-3 right-3 flex items-center gap-2 text-xs text-white">
+                <ArrowUpRight className="h-4 w-4" />
+                <span>Open</span>
+              </div>
             </div>
-            <div className="absolute bottom-3 left-3 flex items-center gap-2 text-xs text-white">
-              <Clock className="h-3 w-3" />
-              <span suppressHydrationWarning>
-                {mounted ? formatDistanceToNow(new Date(bookmark.createdAt), { addSuffix: true }) : 'Just now'}
-              </span>
-            </div>
-            <div className="absolute bottom-3 right-3 flex items-center gap-2 text-xs text-white">
-              <ArrowUpRight className="h-4 w-4" />
-              <span>Open</span>
-            </div>
-          </div>
+          ) : null}
         </Link>
 
         <CardContent className={cn('p-5', compact && 'p-4')}>
