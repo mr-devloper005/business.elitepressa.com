@@ -12,6 +12,7 @@ import { formatDistanceToNow } from 'date-fns'
 
 export function BookmarkCollectionCard({ collection }: { collection: BookmarkCollection }) {
   const [mounted, setMounted] = useState(false)
+  const coverImages = collection.coverImages.filter((image) => typeof image === 'string' && image.trim() && !image.includes('/placeholder.svg'))
 
   useEffect(() => {
     setMounted(true)
@@ -21,18 +22,20 @@ export function BookmarkCollectionCard({ collection }: { collection: BookmarkCol
     <motion.div whileHover={{ y: -4 }} transition={{ duration: 0.2 }}>
       <Link href={`/sbm/collections/${collection.id}`} className="block">
         <Card className="group h-full overflow-hidden border-border bg-card transition-all hover:border-muted-foreground/20">
-        <div className="grid grid-cols-3 gap-1">
-          {collection.coverImages.slice(0, 3).map((image, index) => (
-            <div key={`${collection.id}-${index}`} className="relative aspect-square overflow-hidden">
-              <Image
-                src={image}
-                alt={collection.name}
-                fill
-                className="object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-            </div>
-          ))}
-        </div>
+        {coverImages.length ? (
+          <div className="grid grid-cols-3 gap-1">
+            {coverImages.slice(0, 3).map((image, index) => (
+              <div key={`${collection.id}-${index}`} className="relative aspect-square overflow-hidden">
+                <Image
+                  src={image}
+                  alt={collection.name}
+                  fill
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+              </div>
+            ))}
+          </div>
+        ) : null}
         <CardContent className="p-5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
