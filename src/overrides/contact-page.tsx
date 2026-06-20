@@ -16,18 +16,7 @@ export function ContactPageOverride() {
         </>
       }
     >
-      <div className="grid gap-6 md:grid-cols-2 lg:gap-8">
-        <div className="border border-black/10 bg-white/50 p-6 sm:p-8">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#6b6560]">Editorial</p>
-          <p className="mt-5 text-base font-semibold text-[#0c0c0c]">editor@example.com</p>
-          <p className="mt-3 text-sm leading-relaxed text-[#4a4540]">Stories, fact-checks, corrections, and column pitches.</p>
-        </div>
-        <div className="border border-black/10 bg-white/50 p-6 sm:p-8">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#6b6560]">General</p>
-          <p className="mt-5 text-base font-semibold text-[#0c0c0c]">contact@example.com</p>
-          <p className="mt-3 text-sm leading-relaxed text-[#4a4540]">Partnerships, technical issues, and other requests.</p>
-        </div>
-      </div>
+    
 
       <div className="mt-12 max-w-2xl border-t border-black/10 pt-10">
         <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-[#6b6560]">Response time</p>
